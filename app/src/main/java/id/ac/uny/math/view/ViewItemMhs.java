@@ -9,18 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import static id.ac.uny.math.MathApp.mathDatabase;
 
 import id.ac.uny.math.R;
 import id.ac.uny.math.data.MhsEntity;
+import id.ac.uny.math.data.MhsParcel;
 
 public class ViewItemMhs extends RelativeLayout {
     Context context;
     TextView txtHP;
     TextView txtNama;
     TextView txtAlamat;
-    Button btnEdit;
+    Button btnEdit,btnDelete;
     MhsEntity mhsEntity;
-
+    MhsParcel mhsParcel;
     public ViewItemMhs(Context context) {
         super(context);
         inflate(context);
@@ -59,6 +61,7 @@ public class ViewItemMhs extends RelativeLayout {
         txtNama = findViewById(R.id.txtNama);
         txtAlamat = findViewById(R.id.txtAlamat);
         btnEdit = findViewById(R.id.btnEdit);
+        btnDelete = findViewById(R.id.btnDelete);
 
         btnEdit.setOnClickListener(new OnClickListener() {
             @Override
@@ -68,6 +71,13 @@ public class ViewItemMhs extends RelativeLayout {
                 ((Activity) context).startActivityForResult(intent, MainActivity.CRUD_REQ);
             }
         });
+        btnDelete.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,DeleteActivity.class);
+                intent.putExtra("mhsEntity", mhsEntity.toParcel());
+                ((Activity) context).startActivityForResult(intent, MainActivity.CRUD_REQ);
+            }
+        });
     }
-
 }
